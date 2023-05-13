@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -8,9 +9,6 @@ public class EnemyGenerator : MonoBehaviour
     public bool IsGenerating { get; set; } = true;
 
     [SerializeField] private GameObject _enemy;
-
-    [SerializeField] private float _timeBetweenSpawn;
-
     [SerializeField] private Transform[] _spawnPoints;
 
     private void Awake()
@@ -21,16 +19,17 @@ public class EnemyGenerator : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void Start() => StartCoroutine(SpawnOnTimer());
-
-    private IEnumerator SpawnOnTimer()
+    public IEnumerator SpawnOnTimer(int wavesCount, int timeBetweenWaves)
     {
-        while (IsGenerating)
+        for(int i = 0; i < wavesCount; i++)
         {
-            Instantiate(_enemy, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity);
-            Instantiate(_enemy, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity);
+            if (IsGenerating)
+            {
+                GameObject enemy1 = Instantiate(_enemy, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity);
+                GameObject enemy2 = Instantiate(_enemy, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity);
 
-            yield return new WaitForSeconds(_timeBetweenSpawn);
+                yield return new WaitForSeconds(timeBetweenWaves);
+            }
         }
     }
 }

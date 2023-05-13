@@ -41,9 +41,11 @@ public class Rock : MonoBehaviour, IWeapon
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.tag == "Enemy")
+        if(collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().IsDead)
         {
             collider.gameObject.GetComponent<Enemy>().Death();
+
+            PlayerCharacterController.Instance.KillCounter++;
         }
     }
 }

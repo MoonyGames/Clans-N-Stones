@@ -67,6 +67,8 @@ public class Bomb : MonoBehaviour, IWeapon
         if (collider.gameObject.tag == "Enemy")
         {
             collider.gameObject.GetComponent<Enemy>().Death();
+
+            PlayerCharacterController.Instance.KillCounter++;
         }
     }
 }

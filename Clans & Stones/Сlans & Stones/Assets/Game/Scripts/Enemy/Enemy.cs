@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Rigidbody[] _ragdollComponents;
 
+    public bool IsDead { get; private set; }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -36,9 +38,11 @@ public class Enemy : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            _navMeshAgent.Stop();
+            _navMeshAgent.isStopped = true;
 
             _animator.SetBool("RunToTarget", false);
+
+            transform.rotation = Quaternion.LookRotation(_playerTransform.position);
         }
     }
 
@@ -46,6 +50,10 @@ public class Enemy : MonoBehaviour
 
     public void Death()
     {
+        IsDead = true;
+
+        _navMeshAgent.isStopped = true;
+
         Destroy(_navMeshAgent);
         Destroy(_animator);
 

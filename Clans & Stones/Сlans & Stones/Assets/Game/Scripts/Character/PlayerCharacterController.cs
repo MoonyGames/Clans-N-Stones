@@ -11,9 +11,23 @@ public class PlayerCharacterController : MonoBehaviour
 
     [SerializeField] private Scrollbar _healthbar;
 
-    [SerializeField] private GameObject _looseMenu;
+    [SerializeField] private GameObject _looseMenu, _winMenu;
 
     [SerializeField] private Button[] _weaponButtons;
+
+    private int _killCounter;
+    public int KillCounter
+    {
+        get { return _killCounter; }
+
+        set
+        {
+            _killCounter = value;
+
+            if (_killCounter >= ChangeLevels.Instance.WavesCountForLevels[PlayerPrefs.GetInt("Level", 0)] * 2)
+                Win();
+        }
+    }
 
     private void Awake()
     {
@@ -48,6 +62,20 @@ public class PlayerCharacterController : MonoBehaviour
         _animator.SetBool("IsDead", true);
 
         _looseMenu.SetActive(true);
+
+        for (int i = 0; i < _weaponButtons.Length; i++)
+            _weaponButtons[i].interactable = false;
+
+        EnemyGenerator.Instance.IsGenerating = false;
+
+        BackgroundBlur.Instance.Blur();
+
+        this.enabled = false;
+    }
+
+    private void Win()
+    {
+        _winMenu.SetActive(true);
 
         for (int i = 0; i < _weaponButtons.Length; i++)
             _weaponButtons[i].interactable = false;
