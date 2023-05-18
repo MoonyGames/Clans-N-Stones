@@ -750,7 +750,7 @@ Transform:
   - {fileID: 3225306351257862725}
   - {fileID: 830393297957039666}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &7035507100049032823
 CapsuleCollider:
@@ -865,6 +865,7 @@ MonoBehaviour:
   - {fileID: 4410009381998286322}
   - {fileID: 6648698374595593375}
   - {fileID: 9175323704274863456}
+  _coinSprite: {fileID: 2774964902005190176, guid: 809b8bd994b7a4ced82c1089758e84a1, type: 3}
 --- !u!1 &4517832345389289982
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Rigidbody[] _ragdollComponents;
 
+    [SerializeField] private GameObject _coinSprite;
+
     public bool IsDead { get; private set; }
 
     private void Awake()
@@ -59,6 +61,12 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < _ragdollComponents.Length; i++)
             _ragdollComponents[i].isKinematic = false;
+
+        GameObject coin = Instantiate(_coinSprite);
+
+        coin.transform.position = this.transform.position + new Vector3(0f, 2f, 0f);
+
+        UpdateBalance.Singleton.ChangeBalance(5);
 
         StartCoroutine(DestroyOnTimer(_timeToDestroy));
     }
